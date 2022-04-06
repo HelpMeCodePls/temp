@@ -177,6 +177,7 @@ def load_checkpoint(model, checkpoint_path):
 
     checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
     checkpoint_new = model.state_dict()
+    
     for param in checkpoint_new:
         checkpoint_new[param] = checkpoint[param]
 
