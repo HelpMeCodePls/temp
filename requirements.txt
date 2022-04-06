@@ -2,7 +2,7 @@ click==8
 torch==1.1.0
 torchvision==0.3.0
 requests
-streamlit==1.7.0
+streamlit
 #cupy
 #cupy_cuda111==9.4.0
 modules==1.0.0
