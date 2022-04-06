@@ -157,8 +157,7 @@ def run_app(p_path, c_path, e_path):
             cv_img = (combine.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
             rgb = (cv_img * 255).astype(np.uint8)
             bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
-
-            i_column.image(bgr, cation="Person Image")
+            st.image(bgr, caption="Demo Result")
 
             # if step % 1 == 0:
             #     a = real_image.float().cuda()
