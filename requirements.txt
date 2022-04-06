@@ -2,7 +2,7 @@ torch==1.1.0
 torchvision==0.3.0
 requests
 streamlit
-cupy
+#cupy
 #cupy_cuda111==9.4.0
 modules==1.0.0
 numpy==1.21.5
