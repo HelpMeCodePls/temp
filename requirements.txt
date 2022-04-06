@@ -7,6 +7,6 @@ streamlit
 #cupy_cuda111==9.4.0
 modules==1.0.0
 numpy==1.21.5
-opencv_contrib_python==4.1.2.30
+opencv-python
 Pillow==6.1.0
 tensorboardX==2.5
