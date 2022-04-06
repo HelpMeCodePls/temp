@@ -10,3 +10,4 @@ numpy==1.21.5
 #opencv-python
 Pillow==6.1.0
 tensorboardX==2.5
+opencv-python-headless
