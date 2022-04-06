@@ -52,32 +52,33 @@ def download_file(url, local_filename):
     with requests.get(url, stream=True) as r:
         with open(local_filename, 'wb') as f:
             shutil.copyfileobj(r.raw, f)
-    st.write(local_filename)
+
     return local_filename
 
 # Modified from https://github.com/thoppe/streamlit-skyAR/blob/master/streamlit_app.py
 
 def load_modal():
     download_file(url=MODEL_WEIGHTS_W_DEPLOYMENT_URL, local_filename=MODEL_W_WEIGHTS)
-    
     download_file(url=MODEL_WEIGHTS_G_DEPLOYMENT_URL, local_filename=MODEL_G_WEIGHTS)
 
 
 
 def run_app(p_path, c_path, e_path):
 
-    load_modal()
-    opt = TestOptions().parse()
+    opt = TestOptions.parse()
     opt.warp_checkpoint = MODEL_W_WEIGHTS
     opt.gen_ceckpoint = MODEL_G_WEIGHTS
 
     start_epoch, epoch_iter = 1, 0
 
-    # data_loader = CreateDataLoader(opt)
-    # dataset = data_loader.load_data()
-    # dataset_size = len(data_loader)
-    # print(dataset_size)
+    data_loader = CreateDataLoader(opt)
+    dataset = data_loader.load_data()
+    dataset_size = len(data_loader)
+    print(dataset_size)
     dataset_size = 1
+
+    # fine_height = 256
+    # fine_weight = 192
 
     warp_model = AFWM(opt, 3)
     warp_model.eval()
@@ -91,32 +92,40 @@ def run_app(p_path, c_path, e_path):
     step = 0
     step_per_batch = dataset_size / opt.batchSize
 
-    P = Image.open(p_path).convert('RGB')
-    params = get_params(opt, P.size)
-    transform = get_transform(opt, params)
-    transform_E = get_transform(opt, params, method=Image.NEAREST, normalize=False)
 
-    P_tensor = transform(P)
+    # P = Image.open(p_path).convert('RGB')
+    # params = get_params(opt, P.size)
+    # transform = get_transform(opt, params)
+    # transform_E = get_transform(opt, params, method=Image.NEAREST, normalize=False)
+    #
+    # P_tensor = transform(P)
+    #
+    # C = Image.open(c_path).convert('RGB')
+    # C_tensor = transform(C)
+    #
+    # E = Image.open(e_path).convert('L')
+    # E_tensor = transform_E(E)
+    #
+    # input_dict = {'image': P_tensor, 'clothes': C_tensor, 'edge': E_tensor}
+    #
 
-    C = Image.open(c_path).convert('RGB')
-    C_tensor = transform(C)
-
-    E = Image.open(e_path).convert('L')
-    E_tensor = transform_E(E)
-
-    input_dict = {'image': P_tensor, 'clothes': C_tensor, 'edge': E_tensor}
 
     for epoch in range(1,2):
 
-        # for i, data in enumerate(dataset, start=epoch_iter):
+        for i, data in enumerate(dataset, start=epoch_iter):
             iter_start_time = time.time()
             total_steps += opt.batchSize
             epoch_iter += opt.batchSize
 
-            real_image = P_tensor
-            clothes = C_tensor
-            ##edge is extracted from the clothes image with the built-in function in python
-            edge = E_tensor
+            # real_image = P_tensor
+            # clothes = C_tensor
+            # ##edge is extracted from the clothes image with the built-in function in python
+            # edge = E_tensor
+            real_image = data['image']
+            clothes = data['clothes']
+            edge = data['edge']
+
+
             edge = torch.FloatTensor((edge.detach().numpy() > 0.5).astype(np.int))
             clothes = clothes * edge
 
@@ -162,8 +171,9 @@ def run_app(p_path, c_path, e_path):
             #     cv2.imwrite(sub_path+'/'+str(step)+'.jpg',bgr)
 
             step += 1
-            # if epoch_iter >= dataset_size:
-            #     break
+            if epoch_iter >= dataset_size:
+                break
+
 
 # @st.cache
 # def ensure_model_exists():
@@ -215,7 +225,8 @@ def main():
 
     app_mode = st.sidebar.selectbox("Please Select", SIDEBAR_OPTIONS)
     if app_mode == SIDEBAR_OPTION_DEMO_IMAGE:
-        # st.sidebar.write("Slect Demo Images")
+        st.sidebar.write(" ------ ")
+        st.sidebar.write("Slect Demo Images")
 
         directory_img = os.path.join(DEFAULT_DATA_BASE_DIR, IMAGE_DIR_IMG)
         directory_clo = os.path.join(DEFAULT_DATA_BASE_DIR, IMAGE_DIR_CLOTHES)
@@ -267,7 +278,7 @@ def main():
             run_app(pic_person, pic_clothes, pic_edge)
 
     elif app_mode == SIDEBAR_OPTION_UPLOAD_IMAGE:
-
+        st.sidebar.write(" ------ ")
         st.sidebar.write("Upload Images")
 
         f_p = st.sidebar.file_uploader("Please Select to Upload an Person Image", type=['png', 'jpg'])
@@ -303,5 +314,5 @@ def main():
 
 main()
 
-expander_faq = st.expander("more info:")
+expander_faq = st.expander("more info")
 expander_faq.write("DNF is real!")
