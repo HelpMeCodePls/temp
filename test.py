@@ -36,8 +36,8 @@ IMAGE_DIR_EDGE = 'test_edge'
 MODEL_W_WEIGHTS = f'{DEFAULT_MODEL_BASE_DIR}/warp_model_final.pth'
 MODEL_G_WEIGHTS = f'{DEFAULT_MODEL_BASE_DIR}/gen_model_final.pth'
 
-MODEL_WEIGHTS_W_DEPLOYMENT_URL = 'https://github.com/HelpMeCodePls/temp/releases/download/test/gen_model_final.pth'
-MODEL_WEIGHTS_G_DEPLOYMENT_URL = 'https://github.com/HelpMeCodePls/temp/releases/download/test/warp_model_final.pth'
+MODEL_WEIGHTS_G_DEPLOYMENT_URL = 'https://github.com/HelpMeCodePls/temp/releases/download/test/gen_model_final.pth'
+MODEL_WEIGHTS_W_DEPLOYMENT_URL = 'https://github.com/HelpMeCodePls/temp/releases/download/test/warp_model_final.pth'
 
 
 
