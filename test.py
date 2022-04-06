@@ -52,13 +52,14 @@ def download_file(url, local_filename):
     with requests.get(url, stream=True) as r:
         with open(local_filename, 'wb') as f:
             shutil.copyfileobj(r.raw, f)
-
+    print(local_filename)
     return local_filename
 
 # Modified from https://github.com/thoppe/streamlit-skyAR/blob/master/streamlit_app.py
 
 def load_modal():
     download_file(url=MODEL_WEIGHTS_W_DEPLOYMENT_URL, local_filename=MODEL_W_WEIGHTS)
+    
     download_file(url=MODEL_WEIGHTS_G_DEPLOYMENT_URL, local_filename=MODEL_G_WEIGHTS)
 
 
