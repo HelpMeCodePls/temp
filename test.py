@@ -75,7 +75,7 @@ def run_app(p_path, c_path, e_path):
     dataset = data_loader.load_data()
     dataset_size = len(data_loader)
     print(dataset_size)
-    dataset_size = 1
+#     dataset_size = 1
 
     # fine_height = 256
     # fine_weight = 192
@@ -157,6 +157,8 @@ def run_app(p_path, c_path, e_path):
             cv_img = (combine.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
             rgb = (cv_img * 255).astype(np.uint8)
             bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+            
+
             st.image(bgr, caption="Demo Result")
 
             # if step % 1 == 0:
