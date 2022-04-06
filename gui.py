@@ -213,7 +213,6 @@ def main():
 
     app_mode = st.sidebar.selectbox("Please Select", SIDEBAR_OPTIONS)
     if app_mode == SIDEBAR_OPTION_DEMO_IMAGE:
-        #st.sidebar.write(" ------ ")
         st.sidebar.write("Slect Demo Images")
 
         directory_img = os.path.join(DEFAULT_DATA_BASE_DIR, IMAGE_DIR_IMG)
