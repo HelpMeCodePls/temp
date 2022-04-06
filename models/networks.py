@@ -182,6 +182,6 @@ def load_checkpoint(model, checkpoint_path):
 
   #  model.load_state_dict(checkpoint_new)
 #     model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu')))
-    model.load_state_dict(torch.load(checkpoint_path, False))
+    model.load_state_dict(torch.load(checkpoint_path), False)
 
 
