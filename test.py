@@ -302,5 +302,5 @@ def main():
 
 main()
 
-expander_faq = st.expander("more info:")
-expander_faq.write("DNF is real!")
+#expander_faq = st.expander("more info:")
+#expander_faq.write("DNF is real!")
