@@ -20,7 +20,7 @@ import torch
 import cv2
 import torch.nn.functional as F
 
-
+device = torch.device("cpu")
 
 st.title('Virtual Try-On')
 st.write(" ------ ")
@@ -118,12 +118,12 @@ def run_app(p_path, c_path, e_path):
             edge = torch.FloatTensor((edge.detach().numpy() > 0.5).astype(np.int))
             clothes = clothes * edge
 
-            flow_out = warp_model(real_image.cuda(), clothes.cuda())
+            flow_out = warp_model(real_image.to(device), clothes.to(device))
             warped_cloth, last_flow, = flow_out
-            warped_edge = F.grid_sample(edge.cuda(), last_flow.permute(0, 2, 3, 1),
+            warped_edge = F.grid_sample(edge.to(device), last_flow.permute(0, 2, 3, 1),
                               mode='bilinear', padding_mode='zeros')
 
-            gen_inputs = torch.cat([real_image.cuda(), warped_cloth, warped_edge], 1)
+            gen_inputs = torch.cat([real_image.to(device), warped_cloth, warped_edge], 1)
             gen_outputs = gen_model(gen_inputs)
             p_rendered, m_composite = torch.split(gen_outputs, [3, 1], 1)
             p_rendered = torch.tanh(p_rendered)
@@ -139,8 +139,8 @@ def run_app(p_path, c_path, e_path):
             ## 显示 ##
             # i_column, c_column = st.columns(2)
             i_column = st.columns(1)
-            a = real_image.float().cuda()
-            b = clothes.cuda()
+            a = real_image.float().to(device)
+            b = clothes.to(device)
             c = p_tryon
             combine = torch.cat([a[0], b[0], c[0]], 2).squeeze()
             cv_img = (combine.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
