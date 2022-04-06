@@ -2,7 +2,7 @@
 
 import torch
 
-import cupy
+# import cupy		# 1.
 import math
 import re
 
@@ -271,9 +271,12 @@ def cupy_kernel(strFunction, objVariables):
 	return strKernel
 # end
 
-@cupy.util.memoize(for_each_device=True)
-def cupy_launch(strFunction, strKernel):
-	return cupy.cuda.compile_with_cache(strKernel).get_function(strFunction)
+# @cupy.util.memoize(for_each_device=True)
+
+# @cupy.memoize(for_each_device=True)	# 2.
+
+# def cupy_launch(strFunction, strKernel):	# 2.
+# 	return cupy.cuda.compile_with_cache(strKernel).get_function(strFunction)
 # end
 
 class _FunctionCorrelation(torch.autograd.Function):
@@ -328,7 +331,7 @@ class _FunctionCorrelation(torch.autograd.Function):
 			)
 
 		# elif first.is_cuda == False:
-		# 	raise NotImplementedError()
+			# raise NotImplementedError()
 
 		# end
 
@@ -381,8 +384,8 @@ class _FunctionCorrelation(torch.autograd.Function):
 				# end
 			# end
 
-		elif first.is_cuda == False:
-			raise NotImplementedError()
+		# elif first.is_cuda == False:
+			# raise NotImplementedError()
 
 		# end
 
