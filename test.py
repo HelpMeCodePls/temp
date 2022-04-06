@@ -263,7 +263,7 @@ def main():
             pic_person = os.path.join(directory_img, option_person)
             pic_clothes = os.path.join(directory_clo, option_clothes)
             pic_edge = os.path.join(directory_edge, option_clothes)
-            #run_app(pic_person, pic_clothes, pic_edge)
+            run_app(pic_person, pic_clothes, pic_edge)
 
     elif app_mode == SIDEBAR_OPTION_UPLOAD_IMAGE:
 
@@ -302,5 +302,5 @@ def main():
 
 main()
 
-#expander_faq = st.expander("more info:")
-#expander_faq.write("DNF is real!")
+expander_faq = st.expander("more info:")
+expander_faq.write("DNF is real!")
