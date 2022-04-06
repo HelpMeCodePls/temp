@@ -66,7 +66,7 @@ def load_modal():
 def run_app(p_path, c_path, e_path):
 
     load_modal()
-    opt = TestOptions.parse()
+    opt = TestOptions().parse()
     opt.warp_checkpoint = MODEL_W_WEIGHTS
     opt.gen_ceckpoint = MODEL_G_WEIGHTS
 
