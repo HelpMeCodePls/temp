@@ -265,7 +265,7 @@ def main():
             #run_app(pic_person, pic_clothes, pic_edge)
 
     elif app_mode == SIDEBAR_OPTION_UPLOAD_IMAGE:
-        st.sidebar.write(" ------ ")
+
         st.sidebar.write("Upload Images")
 
         f_p = st.sidebar.file_uploader("Please Select to Upload an Person Image", type=['png', 'jpg'])
